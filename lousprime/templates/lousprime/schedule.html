@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% load static %}
+
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {% load i18n %}
+        {% load static %}
+        {% load account socialaccount %}
+
+        {% load filter_meetings %}
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'lousprime/css/schedule_display.css' %}">
+
+        <!-- Google Site Verification -->
+        <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4"/>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="{% static 'lousprime/javascript/add_courses.js' %}"></script>
+
+        <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+        <title>Schedule • Lou's List Prime</title>
+    </head>
+    <body>
+        {% include 'lousprime/navbar.html' %}
+        {% block content %} {% endblock %}
+
+        {% if not non_friend_uid %}
+            {% if schedule.sections.all %}
+                <div class="container container-fluid">
+                    <h3 class="text-left mt-4 mb-2">{{ schedule.schedule_name }}</h3>
+                    <h6 class="text-left mb-4">Current Credit Count: {{ schedule.credits }}</h6>
+                    <p class="font-weight-light font-italic text-muted"><small>Tip: To view detailed info about a course or to delete it from your schedule, click on it.</small></p>
+                    <hr class="mt-2 mb-4"/>
+                    <a id="schedule_calendar"></a>
+                    <table class="tableFixHeadCal mb-2" style="margin:auto;">
+                        <thead>
+                            <tr class="calendar_header">
+                                <td width="10%">Time</td>
+                                <td width="18%">Monday</td>
+                                <td width="18%">Tuesday</td>
+                                <td width="18%">Wednesday</td>
+                                <td width="18%">Thursday</td>
+                                <td width="18%">Friday</td>
+                            </tr>
+
+                        </thead>
+                        {% for time in times %}
+                            <tr class="alternateCal">
+                                <td class="col-auto border-top-0 border-bottom-0 align-top" style="color:rgb(154, 154, 154)">{{ time.start }}</td>
+                                {% for day in days %}
+                                    <td class="col-auto border-top-0 border-bottom-0">
+                                        {% for meeting in meeting_list %}
+                                            {% if meeting.day == day and meeting.start >= time.num_start and meeting.start < time.num_end %}
+                                                <div class="card text-white position-absolute start-0" id="item" style="background-color:#408cfd; width: 100%; height: {{ meeting.length }}%;  top: {{ meeting.start_frac }}%;">
+                                                    <p class="position-relative top-50 start-50 translate-middle width-100" style="font-size: 0.7vw;"><strong>{{ meeting.alias}}</strong> <span style="color:rgb(243, 243, 243)">{{ meeting.name }}</span><br></p>
+                                                    <a href="#" class="stretched-link" data-toggle="modal" data-target="#{{ meeting.alias|cut:' ' }}-{{ meeting.section_code }}modal"></a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    
+                    {% if schedule.sections.all.section.section_meetings|length == 0 %}
+                        <div class="card mb-4 d-none" id="async">
+                            <div class="card-header">
+                                <h6 class="text-left mt-2">Other Courses</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row justify-content-left mt-2 mb-2">
+                                        {% for section in schedule.sections.all %}
+                                            {% for m in section.section_meetings|filter_meetings %}
+                                                    {% if m.0 == '-' %}
+                                                    <script>
+                                                        $("#async").removeClass('d-none');
+                                                    </script>
+                                                        <div class="col-4 col-sm-2 px-2">
+                                                            <div class="card text-white" id="item" style="background-color: #408cfd; width: 10vw; height: 5vw;">
+                                                                <p class="text-center" style="font-size: 0.7vw; margin-top: 1.3vw;"><strong>{{ section.course_mnemonic}} {{section.course_number}}</strong> <span style="color:rgb(243, 243, 243)">{{ section.course_description }}</span></p>
+                                                                <a href="#" class="stretched-link" data-toggle="modal" data-target="#{{ section.course_mnemonic }}{{ section.course_number }}-{{ section.section_code }}modal"></a>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% for section in schedule.sections.all %}
+                        <div class="modal fade" id="{{ section.course_mnemonic }}{{ section.course_number }}-{{ section.section_code }}modal" tabindex="-1" role="dialog" aria-labelledby="{{ section.course_description }}modalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ section.course_description }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            <b>Section Code:</b> {{ section.section_code }}<br>
+                                            <b>Section Number:</b> {{ section.section_number }}<br>
+                                            <b>Course Number:</b> {{ section.course_mnemonic }} {{section.course_number}}<br>
+                                            <b>Component:</b> {{ section.section_component }} ({{section.section_credits}} Units)<br>
+                                            <b>Instructor:</b> {{ section.section_instructor }}<br>
+                                            <b>Topic:</b> {{ section.section_topic }}<br>
+                                            <b>WaitList:</b> {{ section.section_waitlist }}/{{ section.section_waitlist_cap }}<br>
+                                            <b>Capacity:</b> {{ section.section_enrollment_total }}/{{ section.section_enrollment_capacity}}<br>
+                                            <b>Meeting Times:</b><br>
+                                            {% for m in section.section_meetings|filter_meetings %}
+                                                {{ m.0 }} {{ m.1 }} {{ m.2 }}<br>
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        {% if user == viewing_user %}
+                                            <td class="col-auto">
+                                                <button class="btn btn-primary section-button remove refresh" data-id="{{ section.section_code }}">Remove</button>
+                                            </td>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <hr class="mt-5 mb-5"/>
+                    <a id="schedule_comment"></a>
+                    <div class="card mb-5" style="height: auto;">
+                        <div class="card-header">
+                            <h5 class="text-left p-2 mb-0">Comments</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                                <table class="table table-hover table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <form action="{% url 'lousprime:add_comment' user=schedule.user_account.user.username commenter=user.username %}" method="post">
+                                                {% csrf_token %}
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="comment" id="comment" placeholder="Enter a comment" minlength="1" maxlength="1000">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary float-right">Send</button>
+                                                </fieldset>
+                                            </form>
+                                        </tr>
+                                        <br>
+                                        {% if comments %}
+                                            {% for comment in comments %}
+                                            <tr class="border-top-1 border-bottom-1">
+                                                <td class="text-left" width="20"><img src="{{ comment.commenter.get_avatar_url }}" class="rounded-circle" width="50" height="50" style="border: 1px solid #ccc;"></td>
+                                                <td class="text-left" style="word-wrap: break-word; white-space:normal !important; max-width: 60vw; ">
+                                                    <a href="{% url 'lousprime:schedule' user=comment.commenter.user.username %}" class="link-primary">{{ comment.commenter.extra_data.name }}</a>
+                                                    {% if user == comment.commenter.user %}
+                                                        [You]
+                                                    {% endif %}
+                                                    <br>
+                                                    {{ comment.comment_text }}
+                                                </td>
+                                                {% if user == comment.commenter.user or user == schedule.user_account.user %}
+                                                    <td class="text-right align-middle">
+                                                        <a class="btn btn-outline-danger btn-sm" href="{% url 'lousprime:rem_comment' user=schedule.user_account.user.username uuid=comment.uuid %}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="18" fill="currentColor" class="bi bi-trash" viewBox="0 1 16 16">
+                                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                            </svg>
+                                                        </a>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p class="text-center"> Looks like this schedule doesn't have any comments. Be the first to add one!</p>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            {% else %}
+                <div class="container container fluid">
+                    <h3 class="text-left mt-4">{{ schedule.schedule_name }}</h3>
+                    <hr class="mt-4 mb-4"/>
+                    {% if user == viewing_user %}
+                        <h6 class="text-left mb-4">It looks like your schedule is currently empty...</h6>
+                        <p class="text-left">
+                            Let's change that! To begin adding to your<br>schedule, <a href="{% url 'lousprime:browse_department' %}" class="link-primary">browse</a>
+                            or <a href="{% url 'lousprime:search'%}" class="link-primary">search</a> for courses.
+                        </p>
+                    {% else %}
+                        <h6 class="text-left mb-4">It looks like this schedule is currently empty...</h6>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="container container fluid">
+                <hr class="mt-4 mb-4"/>
+                <h6 class="text-left mb-4">It looks like you're not friends with this user...</h6>
+                <p class="text-left">
+                    Would you like to <a href="{% url 'lousprime:send_request' userID=non_friend_uid %}" class="link-primary">send a friend request?</a>
+                </p>
+            </div>
+        {% endif %}
+    </body>
+
+    {% include 'lousprime/footer.html' %}
+    
+</html>

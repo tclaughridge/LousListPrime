@@ -1,0 +1,91 @@
+{% load static %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4" />
+
+    <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+    <title>About • Lou's List Prime</title>
+</head>
+
+<body>
+    {% include 'lousprime/navbar.html' %}
+    {% block content %} {% endblock %}
+
+    <div class="container container-fluid">
+        <h3 class="mt-4">About Us</h3>
+        <hr class="mt-4 mb-4"/>
+
+        <p>
+            Lou's List Prime began as a CS3240 class project to build a successor to the original Lou's List as its creator, Lou Bloomfield,
+            entered retirement. However, it quickly became clear that the project had the potential to be much more expansive than the original
+            Lou's List. Our team of five students, all of whom are Computer Science majors at the University of Virginia, have worked to take the
+            best parts of Lou's List and expand upon them to streamline the course selection process for UVA students. Lou's List Prime now boasts
+            a more intuitive interface, a robust schedule building system, and a social network that allows students to connect with each other
+            through their coursework.
+        </p>
+        <p>
+            We welcome your feedback. If you have any questions or concerns please do not hesitate to 
+            <a href="mailto:al7gc@virginia.edu? &subject=Regarding LousListPrime:" class="link-primary">contact us</a>.
+        </p>
+
+        <div class="card mt-4 mb-5">
+            <div class="card-header">
+                <h4 class="my-2">Meet the Team</h4>
+                <hr class="mb-4"/>
+                <div class="row my-2">
+                    <div class="col text-center">
+                        <div class="mb-2"> <img src="{% static 'lousprime/images/annli.jpeg' %}" class="rounded-circle" width="100" height="100" alt=""></div>
+                        <h5>Ann Li</h5>
+                        <p>DevOps</p>
+                    </div>
+                    <div class="col text-center">
+                        <div class="mb-2"> <img src="{% static 'lousprime/images/emilyyao.jpeg' %}" class="rounded-circle" width="100" height="100" alt=""></div>
+                        <h5>Emily Yao</h5>
+                        <p>Testing</p>
+                    </div>
+                    <div class="col text-center">
+                        <div class="mb-2"> <img src="{% static 'lousprime/images/ianharvey.jpg' %}" class="rounded-circle" width="100" height="100" alt=""></div>
+                        <h5>Ian Harvey</h5>
+                        <p>Requirements</p>
+                    </div>
+                    <div class="col text-center">
+                        <div class="mb-2"> <img src="{% static 'lousprime/images/kidus.jpeg' %}" class="rounded-circle" width="100" height="100" alt=""></div>
+                        <h5>Kidus Fasil</h5>
+                        <p>Scrum</p>
+                    </div>
+                    <div class="col text-center">
+                        <div class="mb-2"> <img src="{% static 'lousprime/images/thomaslaugh.jpg' %}" class="rounded-circle" width="100" height="100" alt=""></div>
+                        <h5>Thomas Laughridge</h5>
+                        <p>UI/UX</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% include 'lousprime/footer.html' %}
+
+</html>

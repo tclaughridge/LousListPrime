@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% load static %}
+
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {% load i18n %}
+    {% load static %}
+    {% load account socialaccount %}
+
+    {% load filter_meetings %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{% static 'lousprime/css/course_display.css' %}">
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4" />
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="{% static 'lousprime/javascript/add_courses.js' %}"></script>
+
+    <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+
+    <title>{{ dept }} Courses • Lou's List Prime</title>
+</head>
+
+<body>
+    {% include 'lousprime/navbar.html' %}
+    {% block content %} {% endblock %}
+    <div class="container container-fluid mb-5">
+        <container class="center" style="width:90vw; padding-bottom:50px;">
+            <div class="justify-content-center">
+                <h2 class="text-left mt-4 mb-4"> {{ dept }} Department </h2>
+                <div class="tableFixHead">
+                <table class="table border-dark p-0">
+                    {% if courses.items|length == 0 %}
+                        <hr class="mt-4 mb-4"/>
+                        <h5 class="text-left mb-1">Uh Oh!</h5>
+                        <p class="text-left mb-4">No courses found...</p>
+                        <p class="text-left">If you believe this is a mistake, please <br><a href="mailto:al7gc@virginia.edu? &subject=Regarding LousListPrime:" class="link-primary">contact us</a> to request a correction.</p>
+                    {% else %}
+                        <thead>
+                            <tr class="table-borderless">
+                                <th>Section Code</th>
+                                <th>Section Number</th>
+                                <th>Component</th>
+                                <th>Instructor</th>
+                                <th>Topic</th>
+                                <th>WaitList</th>
+                                <th>Capacity</th>
+                                <th>
+                                    <div class="row">
+                                        <div id="time" class="col-7" style="margin-top: auto; margin-bottom:0;">Meeting Times</div>
+                                        <div id="loc" class="col-5" style="margin-top: auto; margin-bottom:0;"> Location</div>
+                                    </div>
+                                </th>
+                                {% if user.is_authenticated %}
+                                    <th>Add/Remove Course</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                    {% endif %}
+                    {% for course, sections in courses.items %}
+                    <tr class="course_title table-bordered border-dark">
+                        <td colspan=2 class="course_title border-dark">{{ dept }} {{ sections.0.course_number }}</td>
+                        <td colspan=7 class="course_title border-dark">{{ sections.0.course_description }}</td>
+                    </tr>
+
+                    {% for section in sections %}
+                    <tr class="alternate table-borderless h-100">
+                        <td class="col-auto">{{ section.section_code }}</td>
+                        <td class="col-auto">{{ section.section_number }}</td>
+                        <td class="col-auto">{{ section.section_component }} ({{section.section_credits}} Units)</td>
+                        <td class="col-auto">{{ section.section_instructor }}</td>
+                        <td class="col-auto">{{ section.section_topic }}</td>
+                        <td class="col-auto">{{ section.section_waitlist }}/{{ section.section_waitlist_cap }}</td>
+                        <td class="col-auto">{{ section.section_enrollment_total }}/{{ section.section_enrollment_capacity}}</td>
+                        <td class="col-auto align-self-center">
+                            <div class="row h-100">
+                                {% for m in section.section_meetings|filter_meetings %}
+                                    <div class="col-7">{{ m.0 }} {{ m.1 }}</div>
+                                    <div class="col-5">{{ m.2 }}</div>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        {% if user.is_authenticated %}
+                            <td class="col-auto">
+                                    {% if section in schedule.sections.all %}
+                                        <button class="btn btn-primary section-button remove" data-id="{{ section.section_code }}">Rem Section</button>
+                                    {% else %}
+                                        <button class="btn btn-primary section-button add" data-id="{{ section.section_code }}">Add Section</button>
+                                    {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
+                </table>
+                </div>
+            </div>
+        </container>
+        <div id="notifs-container" style="z-index:1;"></div>
+    </div>
+</body>
+
+{% include 'lousprime/footer.html' %}
+
+</html>

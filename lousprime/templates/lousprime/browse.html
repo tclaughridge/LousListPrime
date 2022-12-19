@@ -1,0 +1,567 @@
+{% load static %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4" />
+
+    <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+    <title>Browse • Lou's List Prime</title>
+</head>
+
+<body>
+    {% include 'lousprime/navbar.html' %}
+    {% block content %} {% endblock %}
+
+    <div class="container container-fluid">
+        <div class="row mt-4 mb-4">
+          <h3 class="col-4">Browse Departments</h3>
+        </div>
+
+        <!-- Accordion class for collapsible departments-->
+        <div class="accordion mb-5" id="accordionDepts">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                  <button class="btn dropdown-toggle" style="outline:none; box-shadow:none;" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Arts & Sciences Departments
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionDepts">
+                <div class="card-body" style="margin-left:40px; margin-right:40px;">
+                    <!-- Arts & Sciences -->
+                    <table class="table table-borderless table-striped">
+                        <!-- Table for displaying all A&S Departments -->
+                        <tbody>
+                            <tr>
+                                <!-- <td class = "text-left p-2 w-50">
+                                    <a class="link primary" data-toggle="collapse" href="#collapseAAS" role="button" aria-expanded="false" aria-controls="collapseAAS">African-American & African Studies</a>
+                                    <div class="collapse" id="collapseAAS">
+                                      <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                        <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='AAS' %}">AAS - African-American and African Studies</a>
+                                        <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                        <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SWAH' %}">SWAH - Swahili</a>
+                                      </div>
+                                    </div>
+                                </td> -->
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='SWAH' %}">African-American & African Studies</a></td> <!-- TODO: Fix AAS department -->
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='MATH' %}">Mathematics</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='AMST' %}">American Studies</a></td>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='MDST' %}">Media Studies</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='ANTH' %}">Anthropology</a></td>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseARAB" role="button" aria-expanded="false" aria-controls="collapseARAB">Middle Eastern & South Asian Languages & Cultures</a>
+                                  <div class="collapse" id="collapseARAB">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARAB' %}">ARAB - Arabic</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARTR' %}">ARTR - Arabic in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HEBR' %}">HEBR - Hebrew</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HIND' %}">HIND - Hindi</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MESA' %}">MESA - Middle Eastern & South African Languages & Cultures</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MEST' %}">MEST - Middle Eastern Studies</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PERS' %}">PERS - Persian</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PETR' %}">PETR - Persian in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SANS' %}">SANS - Sanskrit</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SAST' %}">SAST - South Asian Studies</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SATR' %}">SATR - South Asian Literature in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='TURK' %}">TURK - Turkish</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='URDU' %}">URDU - Urdu</a>
+                                    </div>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseART" role="button" aria-expanded="false" aria-controls="collapseART">Art</a>
+                                  <div class="collapse" id="collapseART">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARAD' %}">ARAD - Arts Administration</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARAH' %}">ARAH - History of Art & Architecture</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARTH' %}">ARTH - History of Art</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARTS' %}">ARTS - Studio Art</a>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseMUSI" role="button" aria-expanded="false" aria-controls="collapseMUSI">Music</a>
+                                  <div class="collapse" id="collapseMUSI">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MUDB' %}">MUDB - Marching Band</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MUEN' %}">MUEN - Ensembles</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MUPF' %}">MUPF - Private Performance Instruction</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MUSI' %}">MUSI - Music</a>
+                                    </div>
+                                  </div>
+                              </td>
+                                
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='ASTR' %}">Astronomy</a></td>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='PHIL' %}">Philosophy</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseBIOL" role="button" aria-expanded="false" aria-controls="collapseBIOL">Biology</a>
+                                  <div class="collapse" id="collapseBIOL">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='BIOL' %}">BIOL - Biology</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HBIO' %}">HBIO - Human Biology</a>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='PHYS' %}">Physics</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='CHEM' %}">Chemistry</a></td>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapsePOL" role="button" aria-expanded="false" aria-controls="collapsePOL">Politics</a>
+                                  <div class="collapse" id="collapsePOL">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PLAD' %}">PLAD - Departmental Seminar</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PLAP' %}">PLAP - American Politics</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PLCP' %}">PLCP - Comparative Politics</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PLIR' %}">PLIR - International Relations</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PLPT' %}">PLPT - Political Theory</a>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseCLAS" role="button" aria-expanded="false" aria-controls="collapseCLAS">Classics</a>
+                                  <div class="collapse" id="collapseCLAS">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='CLAS' %}">CLAS - Classics</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='GREE' %}">GREE - Greek</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='LATI' %}">LATI - Latin</a>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='PHS' %}">Public Health Sciences</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseDRAM" role="button" aria-expanded="false" aria-controls="collapseDRAM">Drama</a>
+                                  <div class="collapse" id="collapseDRAM">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='DANC' %}">DANC - Dance</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='DRAM' %}">DRAM - Drama</a>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='PSYC' %}">Psychology</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseCHIN" role="button" aria-expanded="false" aria-controls="collapseCHIN">East Asian Languages, Literatures & Cultures</a>
+                                  <div class="collapse" id="collapseCHIN">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='CHIN' %}">CHIN - Chinese</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='CHTR' %}">CHTR - Chinese in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='EALC' %}">EALC - East Asian Languages, Literatures & Cultures</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='EAST' %}">EAST - East Asian Studies</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='JAPN' %}">JAPN - Japanese</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='JPTR' %}">JPTR - Japanese in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='KOR' %}">KOR - Korean</a>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseREL" role="button" aria-expanded="false" aria-controls="collapseREL">Religious Studies</a>
+                                  <div class="collapse" id="collapseREL">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELA' %}">RELA - African Religions</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELB' %}">RELB - Buddhism</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELC' %}">RELC - Christianity</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELG' %}">RELG - General Religion</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELH' %}">RELH - Hinduism</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELI' %}">RELI - Islam</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELJ' %}">RELJ - Judaism</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RELS' %}">RELS - Special Topics</a>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50"><a href="{% url 'lousprime:browse_course' dept_name='ECON' %}">Economics</a></td>
+                                <td class = "text-left p-2">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseSLAV" role="button" aria-expanded="false" aria-controls="collapseSLAV">Slavic Languages & Literatures</a>
+                                  <div class="collapse" id="collapseSLAV">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='POL' %}">POL - Polish</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RUSS' %}">RUSS - Russian</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='RUTR' %}">RUTR - Russian in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SLAV' %}">SLAV - Slavic</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SLFK' %}">SLFK - Slavic Folklore & Oral Literature</a>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseENG" role="button" aria-expanded="false" aria-controls="collapseENG">English</a>
+                                  <div class="collapse" id="collapseENG">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ENCW' %}">ENCW - Creative Writing</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ENGL' %}">ENGL - Literature</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ENGR' %}">ENWR - Writing & Rhetoric</a>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='SOC' %}">Sociology</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseEVSC" role="button" aria-expanded="false" aria-controls="collapseEVSC">Environmental Sciences</a>
+                                  <div class="collapse" id="collapseEVSC">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='EVAT' %}">EVAT - Atmospheric Sciences</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='DRAM' %}">EVEC - Ecology</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='EVGE' %}">EVGE - Geosciences</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='EVSC' %}">EVSC - Environmental Sciences</a>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseSPAN" role="button" aria-expanded="false" aria-controls="collapseSPAN">Spanish, Italian & Portuguese</a>
+                                  <div class="collapse" id="collapseSPAN">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ITAL' %}">ITAL - Italian</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ITTR' %}">ITTR - Italian in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='KICH' %}">KICH - Maya K'iche</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PORT' %}">PORT - Portuguese</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SPAN' %}">SPAN - Spanish</a>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseFREN" role="button" aria-expanded="false" aria-controls="collapseFREN">French Language & Literature</a>
+                                  <div class="collapse" id="collapseFREN">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='CREO' %}">CREO - Creole</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='FRTR' %}">FRTR - French in Translation</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='FREN' %}">FREN - French</a>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='STAT' %}">Statistics</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseGERM" role="button" aria-expanded="false" aria-controls="collapseGERM">German Language & Literature</a>
+                                  <div class="collapse" id="collapseGERM">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='GERM' %}">GERM - German</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='GETR' %}">GETR - German in Translation</a>
+                                  </div>
+                                </td>
+
+                                <td class = "text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='WGS' %}">Women, Gender & Sexuality</a></td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseHIS" role="button" aria-expanded="false" aria-controls="collapseHIS">History</a>
+                                  <div class="collapse" id="collapseHIS">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HIAF' %}">HIAF - African History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HIEA' %}">HIEA - East Asian History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HIEU' %}">HIEU - European History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HILA' %}">HILA - Latin American History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HIME' %}">HIME - Middle Eastern History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HISA' %}">HISA - South Asian History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HIST' %}">HIST - General History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='HIUS' %}">HIUS - United States History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MSP' %}">MSP - Medieval Studies</a>
+                                  </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                  <button class="btn dropdown-toggle collapsed" style="outline:none; box-shadow:none;" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Engineering & Applied Sciences Departments
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionDepts">
+                <div class="card-body" style="margin-left:40px; margin-right:40px;">
+                    <!-- SEAS -->
+                    <table class="table table-borderless table-striped">
+                        <!-- Table for displaying all SEAS Departments -->
+                        <tbody>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='APMA' %}">Applied Mathematics</a></td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='ECE' %}">Electrical & Computer Engineering</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='BME' %}">Biomedical Engineering</a></td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='MSE' %}">Materials Science & Engineering</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='CHE' %}">Chemical Engineering</a></td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='MAE' %}">Mechanical & Aerospace Engineering</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='CE' %}">Civil & Environmental Engineering</a></td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='STS' %}">Science, Technology & Society</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='CS' %}">Computer Science</a></td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='SYS' %}">Systems & Information Engineering</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='ENGR' %}">Cross-Disciplinary Courses</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                  <button class="btn dropdown-toggle collapsed" style="outline:none; box-shadow:none;" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Education & Human Development Departments
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionDepts">
+                <div class="card-body" style="margin-left:40px; margin-right:40px;">
+                  <!-- Education -->
+                  <table class="table table-borderless table-striped">
+                    <!-- Table for displaying all Education Departments -->
+                    <tbody>
+                        <tr>
+                            <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='EDHS' %}">Human Services</a></td>
+                            <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='EDIS' %}">Curriculum, Instruction & Special Education</a></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='EDLF' %}">Leadership, Foundations & Policy</a></td>
+                            <td class = "text-left p-2 w-50">
+                              <a class="link primary" data-toggle="collapse" href="#collapseKINE" role="button" aria-expanded="false" aria-controls="collapseKINE">Kinesiology</a>
+                              <div class="collapse" id="collapseKINE">
+                                <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                  <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='KINE' %}">KINE - Kinesiology</a>
+                                  <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                  <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='KLPA' %}">KLPA - Lifetime Physical Activity</a>
+                              </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-5">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn dropdown-toggle collapsed" style="outline:none; box-shadow:none;" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      Other Departments
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionDepts">
+                  <div class="card-body" style="margin-left:40px; margin-right:40px;">
+                    <!-- Other Departments -->
+                    <table class="table table-borderless table-striped">
+                        <!-- Table for displaying all Misc. Departments -->
+                        <tbody>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseARCH" role="button" aria-expanded="false" aria-controls="collapseARCH">Architecture</a>
+                                  <div class="collapse" id="collapseARCH">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ALAR' %}">ALAR - Landscape Architecture</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARAH' %}">ARAH - History of Art & Architecture</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARCH' %}">ARCH - Architecture</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARH' %}">ARH - Architectural History</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='ARST' %}">LAR - Landscape Architecture</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PLAC' %}">PLAC - Planning Application</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PLAN' %}">PLAN - Urban & Environmental Planning</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='SARC' %}">SARC - Architecture School</a>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='LAW' %}">Law School</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2 w-50"><a href="{% url 'lousprime:browse_course' dept_name='GBUS' %}">Business (Darden School)</a></td>
+                                <td class = "text-left p-2">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseMED" role="button" aria-expanded="false" aria-controls="collapseMED">Medical School</a>
+                                  <div class="collapse" id="collapseMED">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='BIMS' %}">BIMS - Biomedical Sciences</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='BIOC' %}">BIOC - Biochemistry</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='BIOP' %}">BIOP - Biophysics</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='CELL' %}">CELL - Cell Biology</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MED' %}">MED - Medicine</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='MICR' %}">MICR - Microbiology</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PATH' %}">PATH - Pathology</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PHAR' %}">PHAR - Pharmacology</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='PHY' %}">PHY - Physiology</a>
+                                    </div>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseCOM" role="button" aria-expanded="false" aria-controls="collapseCOM">Commerce (McIntire School)</a>
+                                  <div class="collapse" id="collapseCOM">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='COMM' %}">COMM - Commerce</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='GCOM' %}">GCOM - Graduate Commerce</a>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class = "text-left p-2 w-50">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseNURS" role="button" aria-expanded="false" aria-controls="collapseNURS">Nursing School</a>
+                                  <div class="collapse" id="collapseNURS">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='GCNL' %}">GCNL - Clinical Nurse Leader</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='GNUR' %}">GNUR - Graduate Nursing</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='NUCO' %}">NUCO - Nursing Core</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='NUIP' %}">NUIP - Nursing Interprofessional</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='NURS' %}">NURS - Nursing</a>
+                                    </div>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2 w-50"><a href="{% url 'lousprime:browse_course' dept_name='ENTP' %}">Cross-Disciplinary</a></td>
+                                <td class = "text-left p-2">
+                                  <a class="link primary" data-toggle="collapse" href="#collapseBA" role="button" aria-expanded="false" aria-controls="collapseBA">Public Policy (Batten School)</a>
+                                  <div class="collapse" id="collapseBA">
+                                    <div class="card card-body" style="padding:5px; border: 1px solid #e5e5e5;">
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='LPPA' %}">LPPA - Evaluation & Analysis</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='LPPL' %}">LPPL - Leadership</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='LPPP' %}">LPPP - Policy</a>
+                                      <hr class="mt-1 mb-1" style="height:0.5px; color:#e5e5e5;"/>
+                                      <a class="link primary" href="{% url 'lousprime:browse_course' dept_name='LPPS' %}">LPPS - Substantive</a>
+                                    </div>
+                                  </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='DS' %}">Data Science</a></td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='USEM' %}">University Seminars</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='INST' %}">Interdisciplinary Studies</a></td>
+                                <td class="text-left p-2"><a href="{% url 'lousprime:browse_course' dept_name='UNST' %}">University Studies</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+    </div>
+</body>
+
+{% include 'lousprime/footer.html' %}
+
+</html>

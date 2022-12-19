@@ -1,0 +1,106 @@
+{% load static %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'lousprime/css/course_display.css' %}">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'lousprime/css/find_friends.css' %}">
+
+
+        <!-- Google Site Verification -->
+        <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4"/>
+
+        <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+        <title>Social • Lou's List Prime</title>
+    </head>
+    <body>
+        {% include 'lousprime/navbar.html' %}
+        {% block content %} {% endblock %}
+
+        <div class="container container-fluid">
+            <div class="row mt-4">
+                {% if username != viewing_user %}
+                    <div class="col">
+                        <h3 class="text-left">{{ profile.user_account.extra_data.name}}</h3>
+                    </div>
+                {% else %}
+                    <div class="col">
+                        <h3 class="text-left">My Profile</h3>
+                    </div>
+                {% endif %}
+                {% if username != viewing_user %}
+                    {% if not non_friend_uid and not pending_request_id and not outgoing_request_id%}
+                        <div class="col text-right">
+                            <a class="btn btn-outline-primary" href="{% url 'lousprime:schedule' user=username%}" role="button">View Schedule</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% if username == viewing_user %}
+                    <div class="col text-right">
+                        <a href="{% url 'lousprime:profile_edit' user=username%}" class="btn btn-outline-primary">Edit</a> 
+                    </div>
+                {% endif %}
+            </div>
+            <hr class="mt-4 mb-4"/>
+        </div>
+    </body>
+    <div class="container container-fluid">
+        <div class="text-left mt-4"> <img src="{{ profile.user_account.get_avatar_url }}" class="rounded-circle" width="150"
+            height="150" alt=""></div>
+            <h5 class="text-left mt-4">Major(s): 
+            </h5>
+            <p style="word-wrap: break-word;">{{profile.user_major}}</p>
+            <h5 class="text-left mt-4">Graduation Year: </h5>
+            <p style="word-wrap: break-word;">{{profile.user_graduation_year}}</p>
+            <h5 class="text-left mt-4">About Me: </h5>
+            <p style="word-wrap: break-word;">{{profile.user_description|linebreaksbr}}</p>
+        </div>
+        {% if pending_request_id %}
+        <div class="container container fluid">
+            <hr class="mt-4 mb-4"/>
+            <h6 class="text-left mb-4">It looks like this user sent you a friend request...</h6>
+            <p class="text-left">
+                Would you like to accept the friend request? 
+            </p>
+            <a href="{% url 'lousprime:accept_request' requestID=pending_request_id %}" class="btn btn-outline-primary mb-5"> Yes </a>
+            <a href="{% url 'lousprime:reject_request' requestID=pending_request_id %}" class="btn btn-outline-primary mb-5"> No </a>
+        </div>
+        {% endif %}
+        {% if outgoing_request_id %}
+        <div class="container container fluid">
+            <hr class="mt-4 mb-4"/>
+            <h6 class="text-left mb-4">It looks like you sent this user a friend request already! </h6>
+            <a href="{% url 'lousprime:social' user=username %}" class="link-primary mb-5"> View other outgoing requests? </a>
+        </div>
+        {% endif %}
+
+        {% if non_friend_uid%}
+        <div class="container container fluid">
+            <hr class="mt-4 mb-4"/>
+            <h6 class="text-left mb-4">It looks like you're not friends with this user...</h6>
+            <p class="text-left">
+                Would you like to <a href="{% url 'lousprime:send_request' userID=non_friend_uid %}" class="link-primary mb-5">send a friend request?</a>
+            </p>
+        </div>
+        {% endif %}
+
+      </div>
+
+    {% include 'lousprime/footer.html' %}
+
+</html>

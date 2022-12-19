@@ -1,0 +1,149 @@
+{% load static %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'lousprime/css/course_display.css' %}">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'lousprime/css/find_friends.css' %}">
+
+        <!-- Google Site Verification -->
+        <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4"/>
+
+        <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+        <title>Social • Lou's List Prime</title>
+    </head>
+    <body>
+        {% include 'lousprime/navbar.html' %}
+        {% block content %} {% endblock %}
+
+        <div class="container container-fluid">
+            <h3 class="text-left mt-4">Social Dashboard</h3>
+            <hr class="mt-4 mb-4"/>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card" style="height:30rem;">
+                        <div class="card-header">
+                            <h5 class="text-left p-2 mb-0">My Friends ({{friends.user_friends.all|length}})</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-borderless">
+                                    <tbody>
+                                        {% if friends %}
+                                            {% for user in friends.user_friends.all %}
+                                            <tr>
+                                                <td class="text-left" width="20"><img src="{{ user.get_avatar_url }}" class="rounded-circle" width="50" height="50" style="border: 1px solid #ccc;"></td>
+                                                <td class="text-left"><a href="{% url 'lousprime:profile' user=user.user.username %}" class="link-primary">{{ user.extra_data.name }}</a></td>
+                                                <td class="text-right"><a href="{% url 'lousprime:remove_friend' friendID=user.id %}" class="btn btn-outline-primary">Remove</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card" style="height:30rem;">
+                        <div class="card-header">
+                            <h5 class="text-left p-2 mb-0">Pending Requests ({{friend_requests|length}})</h5>
+
+                        </div>
+                        <div class="card-body">
+                            {% if friend_requests %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-borderless results">
+                                        {% for request in friend_requests %}
+                                        <tr>
+                                            <td class="text-left" width="20"><img src="{{ request.sender.get_avatar_url }}" class="rounded-circle" width="50" height="50" style="border: 1px solid #ccc;"></td>
+                                            <td class="text-left"><a href="{% url 'lousprime:profile' user=request.sender %}" class="link-primary">{{ request.sender.extra_data.name }}</a></td>
+                                            <td class="text-right">
+                                                <a href="{% url 'lousprime:accept_request' requestID=request.sender.id %}" class="btn btn-outline-primary mr-2">Accept</a>
+                                                <a href="{% url 'lousprime:reject_request' requestID=request.sender.id %}" class="btn btn-outline-primary">Reject</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card" style="height:30rem;">
+                        <div class="card-header">
+                            <h5 class="text-left p-2 mb-0">Find Friends ({{users|length}})</h5>
+                        </div>
+                        <div class="card-body">                            
+                            <input type="text" class="search form-control mb-3" placeholder="Search by Name...">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-borderless results">
+                                    <tbody>
+                                        <!-- An attempt to list all users in 'social accounts'... unsure of how to do this correctly -->
+                                        {% for u in users %}
+                                            <tr>
+                                                <td class="text-left" width="20"><img src="{{ u.get_avatar_url }}" class="rounded-circle" width="50" height="50" style="border: 1px solid #ccc;"></td>
+                                                <td class="text-left"><a href="{% url 'lousprime:profile' user=u %}" class="link-primary">{{ u.extra_data.name }}</a></td>
+                                                <td class="text-right"><a href="{% url 'lousprime:send_request' userID=u.id %}" class="btn btn-outline-primary">Add Friend</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <div class="card" style="height:30rem;">
+                        <div class="card-header">
+                            <h5 class="text-left p-2 mb-0">Outgoing Requests ({{outgoing_requests|length}})</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if outgoing_requests %}
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-borderless">
+                                        {% for request in outgoing_requests %}
+                                        <tr>
+                                            <td class="text-left" width="20"><img src="{{ request.receiver.get_avatar_url }}" class="rounded-circle" width="50" height="50" style="border: 1px solid #ccc;"></td>
+                                            <td class="text-left"><a href="{% url 'lousprime:profile' user=request.receiver %}" class="link-primary">{{ request.receiver.extra_data.name }}</a></td>
+                                            <td class="text-right"><a href="{% url 'lousprime:cancel_request' requestID=request.receiver.id %}" class="btn btn-outline-primary">Cancel</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            {% endif %}
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+
+    {% include 'lousprime/footer.html' %}
+
+    <!-- Custom JavaScript -->
+    <script src="{% static 'lousprime/javascript/tableSearch.js' %}"></script>
+
+</html>

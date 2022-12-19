@@ -1,0 +1,84 @@
+table, th, td{
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+table{
+    width:100%;
+    border-collapse:separate;
+    word-wrap: break-word;
+}
+
+
+.tableFixHead thead th {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    background:rgb(98, 96, 96);
+    color: white;
+    font-weight: normal;
+    font-size: 1vw;
+}
+
+.tableFixHeadCal thead th {
+    position: sticky;
+    top: 0px;
+    text-align: center;
+    z-index: 1;
+    background:rgb(0, 96, 96);
+    color: white;
+    font-weight: normal;
+    font-size: 1vw;
+}
+
+.alternate{
+    font-size: 1vw;
+}
+
+.alternateCal{
+    text-align: center;
+    font-size: 0.8vw;
+    height: 3vw;
+
+    border-top: 0.5px solid #e2e2e2 !important;
+}
+
+button.section-button{
+    width: 8vw;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 1vw;
+}
+
+.remove{
+    background-color: rgb(229, 114, 0) !important;
+    border-color:  rgb(229, 114, 0) !important;
+}
+
+.add{
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+tr.course_title{
+    text-align: center;
+    font-size: 1.2vw;
+    height: 50px;
+}
+
+tr.calendar_header{
+    text-align: center;
+    background:rgb(255, 255, 255);
+    color: rgb(154, 154, 154);
+    font-size: 1vw;
+    height: 30px;
+}
+
+h2{
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:20px;
+}

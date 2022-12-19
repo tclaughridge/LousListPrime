@@ -1,0 +1,129 @@
+table, th, td{
+    border: 1px solid black;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+table{
+    width:100%;
+    border-collapse:separate;
+    word-wrap: break-word;
+}
+
+.tableFixHead thead th {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+    background-color: #343a40;
+    color: white;
+    font-weight: normal;
+    font-size: 1vw;
+}
+
+.alternate{
+    font-size: 1vw;
+}
+
+button.section-button{
+    width: 8vw;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 1vw;
+}
+
+.alternate:nth-of-type(even) {
+    background: #F5F5F5;
+}
+
+.alternate:nth-of-type(odd) {
+    background: #E0E0E0;
+}
+
+.remove{
+    background-color: rgb(229, 114, 0) !important;
+    border-color:  rgb(229, 114, 0) !important;
+}
+
+.add{
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+}
+
+tr.course_title{
+    text-align: center;
+    font-size: 1.2vw;
+    height: 50px;
+}
+
+h2{
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+#notifs-container{
+	position :  fixed;
+    bottom : 0px;
+    right: 25px;
+}
+
+.notifs {
+    visibility: hidden;
+    background-color: #5c92e2 !important;
+    margin-bottom : 20px;
+    color: #fff;
+    text-align: center;
+    width: 500px;
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+    border-color: #5c92e2;
+    border-style: none;
+}
+
+.notifs.remove{
+    background-color:rgb(244, 150, 55) !important;
+    border-color: rgb(244, 150, 55);
+    border-style: none;
+}
+
+.notifs.conflict{
+    background-color: rgb(214, 63, 63) !important;
+    border-color: red;
+    border-style: none;
+}
+
+.notifs.show {
+visibility: visible; /* Show the snackbar */
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+However, delay the fade out process for 2.5 seconds */
+-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+from {bottom: 0; opacity: 0;}
+to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+from {bottom: 0; opacity: 0;}
+to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+from {bottom: 30px; opacity: 1;}
+to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+from {bottom: 30px; opacity: 1;}
+to {bottom: 0; opacity: 0;}
+}

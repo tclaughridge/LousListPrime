@@ -1,0 +1,131 @@
+{% load static %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="{% static 'lousprime/css/course_display.css' %}">
+
+  <!-- Google Site Verification -->
+  <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4" />
+
+  <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+  <title>Search • Lou's List Prime</title>
+</head>
+
+<body>
+  {% include 'lousprime/navbar.html' %}
+  {% include 'lousprime/alert.html' %}
+  {% block content %} {% endblock %}
+  <div class="container container-fluid">
+    <div class="form-group">
+      <form action="{% url 'lousprime:search_results' %}" method="post">
+        {% csrf_token %}
+        <div class="form">
+          <div class="title mt-4 mb-4">
+            <h3> Search Instructions</h3>
+            <p> Enter one or more strings to focus the search on a particular type of class or location. Fragmentary
+              strings are typically good enough.
+              The search is mostly case insensitive.
+              To get a better idea to how to format the search. Once you have specified the constraints for the search,
+              press the search button!</p>
+          </div>
+          <div class="center">
+            <table>
+              <tr>
+                <th>Search Item</th>
+                <th>Entry Form</th>
+                <th>Examples</th>
+              </tr>
+              <tr>
+                <td>Course Mnenomic:</td>
+                <td><input class="form-control" type="text" name="subject"></td>
+                <td>"MATH", "Mat", "MA", "th", or blank all match "MATH"</td>
+              </tr>
+              <tr>
+                <td>Course Number:</td>
+                <td><input class="form-control" type="text" name="catalog_number"></td>
+                <td>"1010", "101", "10", "01", or blank all match "1010"</td>
+              </tr>
+              <tr>
+                <td>Type:</td>
+                <td><input class="form-control" type="text" name="component"></td>
+                <td>"LEC for Lecture, LAB for Labotory, STO for Studio, SEM for Seminar"</td>
+              </tr>
+              <tr>
+                <td>Instructor:</td>
+                <td><input class="form-control" type="text" name="instructor"></td>
+                <td>"Bloomfield", "FIELD", "BLoomFIELd", "BLOOMFIELD", Aaron Bloomfield", "oom", "OOM", or blank all match "Aaron Bloomfield"</td>
+              </tr>
+              <tr>
+                <td>Location:</td>
+                <td><input class="form-control" type="text" name="facility_description"></td>
+                <td>"Physics", "PHYSICS", "hysics", "Phy", "203", "20", "03", or blank all match "Physics 203"</td>
+              </tr>
+              <tr>
+                <td>Days:</td>
+                <td><input class="form-control" type="text" name="days"></td>
+                <td>"MoWeFr", "MoWe", "MOWefR", "Fr" or blank all match "MoWeFr"</td>
+              </tr>
+              <tr>
+                <td>Units:</td>
+                <td><input class="form-control" type="text" name="units"></td>
+                <td>"3" or blank all match all classes with 3 units</td>
+              </tr>
+              <tr>
+                <td>Time:</td>
+                <td><input class="form-control" type="text" name="time"></td>
+                <td>"1:00PM - 1:50PM", "1:00pm - 1:50pm", "1:00PM", "1:50PM", "1:50", "1:", or blank all match "1:00PM - 1:50PM"</td>
+              </tr>
+              <tr>
+                <td>Class Title:</td>
+                <td><input class="form-control" type="text" name="description"></td>
+                <td>	"How Things Work", "THINGS", "How", or blank all match "How Things Work"</td>
+              </tr>
+              <tr>
+                <td>Topic:</td>
+                <td><input class="form-control" type="text" name="topic"></td>
+                <td>"Digitizing America", "DIGITIZ", "America", "AMERICA", "aMerICA", or blank all match "Digitizing America"</td>
+              </tr>
+              <tr>
+                <td> Enrollment Limit:</td>
+                <td><input class="form-control" type="text" name="min_limit" placeholder="Min"> <input class="form-control"
+                    type="text" name="max_limit" placeholder="Max"></td>
+                <td>Matches classes with enrollment limits in the range Min to Max. A blank matches all classes.</td>
+              </tr>
+              <tr>
+                <td> Current Enrollment:</td>
+                <td><input class="form-control" type="text" name="min_enrollment" placeholder="Min"> <input class="form-control"
+                    type="text" name="max_enrollment" placeholder="Max"></td>
+                <td>Matches classes with current enrollments in the range Min to Max. A blank matches all classes.</td>
+              </tr>
+              <tr>
+                <td> Current WaitList:</td>
+                <td><input class="form-control" type="text" name="min_waitlist" placeholder="Min"> <input class="form-control"
+                    type="text" name="max_waitlist" placeholder="Max"></td>
+                <td>Matches classes with current waitlists in the range Min to Max. A blank matches all classes.</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <input class="btn btn-outline-primary mb-5 mt-1" type="submit" value="Search">
+      </form>
+    </div>
+  </div>
+  
+</body>
+
+{% include 'lousprime/footer.html' %}
+
+</html>

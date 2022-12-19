@@ -1,0 +1,33 @@
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<body class="d-flex flex-column min-vh-100">
+    <footer class="footer-collapse bg-light text-muted mt-auto">
+        <div class="p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+            <div class="container container-fluid">
+                <div class="row mt-2 mr-auto">
+                    <div class="col-sm">
+                        <h6>Lou's List Prime</h6>
+                        <p>A comprehensive course website for students <br> and faculty at the University of Virginia.</p>
+                        <p>
+                            <a href="mailto:al7gc@virginia.edu? &subject=Regarding LousListPrime:" class="link-primary">Contact Us</a> | 
+                            <a href="{% url 'lousprime:about' %}" class="link-primary">Learn More</a> | 
+                            <a href="{% url 'lousprime:privacy' %}" class="link-primary" target="_blank">Privacy Policy</a>
+                        </p>
+                    </div>
+                    <div class="col-sm ml-auto d-none d-sm-block text-right">
+                        <h6 class="mb-1">Authors:</h6>
+                        <p class="mb-0"><a href="https://github.com/Ann924" class="link-primary"><small>Ann Li</small></a></p>
+                        <p class="mb-0"><a href="https://github.com/emiyyao" class="link-primary"><small>Emily Yao</small></a></p>
+                        <p class="mb-0"><a href="https://github.com/ianharvey302" class="link-primary"><small>Ian Harvey</small></a></p>
+                        <p class="mb-0"><a href="https://github.com/kidusf" class="link-primary"><small>Kidus Fasil</small></a></p>
+                        <p class="mb-0"><a href="https://github.com/tclaughridge" class="link-primary"><small>Thomas Laughridge</small></a></p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>

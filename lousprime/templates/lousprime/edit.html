@@ -1,0 +1,61 @@
+{% load static %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% load i18n %}
+{% load static %}
+{% load account socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'lousprime/css/course_display.css' %}">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'lousprime/css/find_friends.css' %}">
+
+
+        <!-- Google Site Verification -->
+        <meta name="google-site-verification" content="jaHShg5VEXXAe3ffkUi3A8ViBJl-4WukC2uOShULzv4"/>
+
+        <link rel="icon" href="{% static 'lousprime/images/lousprime3.png' %}">
+        <title>Social • Lou's List Prime</title>
+    </head>
+    <body>
+        {% include 'lousprime/navbar.html' %}
+        {% block content %} {% endblock %}
+
+        <div class="container container-fluid">
+            <h3 class="text-left mt-4">My Profile</h3>
+          <!-- <div class="text-right"> <img src="{{ social_account.get_avatar_url }}" class="rounded-circle" width="75"
+                            height="75" alt=""></div>-->
+            <hr class="mt-4 mb-4"/>
+            <p class="font-weight-light font-italic text-muted"> Edit your information below</p>
+        </div>
+    </body>
+    <div class="container container-fluid">
+        <div class="form-group">
+            <form action="{% url 'lousprime:profile_save' user=username %}" method="post">
+                {% csrf_token %}
+                <h5 class="text-left mt-4">Major: </h5>
+                <input class="form-control" type="text" name="major" maxlength="100" value='{{profile.user_major}}' >
+                <h5 class="text-left mt-4">Graduation Year: </h5>
+                {% if error_message %}<p><strong>{{ error_message|linebreaksbr }}</strong></p>{% endif %}
+                <input class="form-control" type="number" name="grad_year" value='{{profile.user_graduation_year}}'>
+                <h5 class="text-left mt-4">About Me: </h5>
+                <textarea class="form-control" name="description" maxlength="10000" rows="8" cols="50">{{profile.user_description}}</textarea>
+                <input class="btn btn-outline-primary mb-5 mt-1" type="submit" value="Save">
+            </form>
+        </div>
+      </div>
+
+    {% include 'lousprime/footer.html' %}
+
+</html>
